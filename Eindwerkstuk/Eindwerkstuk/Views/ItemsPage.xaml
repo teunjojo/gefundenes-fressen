@@ -30,7 +30,7 @@
             <CollectionView.ItemTemplate >
                 <DataTemplate>
                     <StackLayout Padding="30,5" x:DataType="model:Item" Orientation="Horizontal" >
-                        <Button WidthRequest="50" FontSize="20" Padding="0,0,0,5" Text="-" Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=RemoveItemCommand}"/>
+                        <Button WidthRequest="50" FontSize="20" Padding="0,0,0,5" Text="-" Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=RemoveItemCommand}" CommandParameter="{Binding .}"/>
                         <Label Text="{Binding Text}" 
                             LineBreakMode="NoWrap" 
                             Style="{DynamicResource ListItemTextStyle}" 
