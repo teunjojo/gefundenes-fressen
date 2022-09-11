@@ -26,9 +26,8 @@ namespace Eindwerkstuk.ViewModels
 
             ItemTapped = new Command<Item>(OnItemSelected);
 
-            RemoveItemCommand = new Command<Item>(RemoveItem);
+            RemoveItemCommand = new Command<Item>(OnDeleteItem);
 
-            AddItemCommand = new Command(OnAddItem);
             SaveCommand = new Command(OnSave, ValidateSave);
             this.PropertyChanged +=
                 (_, __) => SaveCommand.ChangeCanExecute();
@@ -73,19 +72,6 @@ namespace Eindwerkstuk.ViewModels
             }
         }
 
-        private async void OnAddItem(object obj)
-        {
-            await Shell.Current.GoToAsync(nameof(NewItemPage));
-        }
-
-        void RemoveItem(Item item)
-        {
-            if (item == null)
-                return;
-
-            item = null;
-        }
-
         async void OnItemSelected(Item item)
         {
             if (item == null)
@@ -116,10 +102,20 @@ namespace Eindwerkstuk.ViewModels
             {
                 Id = Guid.NewGuid().ToString(),
                 Text = Text
-            };
+        };
+            Text = null;
 
             await DataStore.AddItemAsync(newItem);
            await ExecuteLoadItemsCommand();
+        }
+
+        async void OnDeleteItem(Item item)
+        {
+            if (item == null)
+                return;
+
+            await DataStore.DeleteItemAsync(item.Id);
+            await ExecuteLoadItemsCommand();
         }
 
     }
