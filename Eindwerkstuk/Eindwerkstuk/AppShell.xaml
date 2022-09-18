@@ -31,6 +31,7 @@
 
     <TabBar>
         <ShellContent Title="Browse" Icon="icon_feed.png" ContentTemplate="{DataTemplate local:ItemsPage}" />
+        <ShellContent Title="Temp" Icon="icon_feed.png" ContentTemplate="{DataTemplate local:SearchPage}" />
     </TabBar>
 
 
