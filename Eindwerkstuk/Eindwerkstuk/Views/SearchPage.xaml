@@ -8,14 +8,27 @@
     <ContentPage.BindingContext>
         <local:SearchPageViewModel/>
     </ContentPage.BindingContext>
-    
-    <RefreshView>
-        <ListView ItemsSource="{Binding Recipes}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ImageCell Text="{Binding Text}" ImageSource="{Binding Image}" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </RefreshView>
+
+    <ListView ItemsSource="{Binding Recipes}"
+              HasUnevenRows="True"
+              SeparatorVisibility="None">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <Grid Padding="8">
+                        <Frame CornerRadius="8">
+                            <StackLayout Orientation="Horizontal">
+                                <Image Source="{Binding Image}"
+                                   WidthRequest="66"/>
+                                <StackLayout>
+                                    <Label Text="{Binding Name}"
+                                       FontSize="Large"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
 </ContentPage>
