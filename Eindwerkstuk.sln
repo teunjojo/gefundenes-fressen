@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eindwerkstuk.Android", "Ein
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eindwerkstuk.iOS", "Eindwerkstuk\Eindwerkstuk.iOS\Eindwerkstuk.iOS.csproj", "{ECD5319A-2409-4D01-BE34-2E1810C90DE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eindwerkstuk", "Eindwerkstuk\Eindwerkstuk\Eindwerkstuk.csproj", "{DF29F355-77DB-4DD0-8AF6-FC1CA55E295A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eindwerkstuk", "Eindwerkstuk\Eindwerkstuk\Eindwerkstuk.csproj", "{DF29F355-77DB-4DD0-8AF6-FC1CA55E295A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,9 +37,9 @@ Global
 		{DA8C40C9-64B8-456F-8122-9287231236A1}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{DA8C40C9-64B8-456F-8122-9287231236A1}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{DA8C40C9-64B8-456F-8122-9287231236A1}.Release|iPhoneSimulator.Deploy.0 = Release|Any CPU
-		{ECD5319A-2409-4D01-BE34-2E1810C90DE1}.Debug|Any CPU.ActiveCfg = Debug|iPhone
-		{ECD5319A-2409-4D01-BE34-2E1810C90DE1}.Debug|Any CPU.Build.0 = Debug|iPhone
-		{ECD5319A-2409-4D01-BE34-2E1810C90DE1}.Debug|Any CPU.Deploy.0 = Debug|iPhone
+		{ECD5319A-2409-4D01-BE34-2E1810C90DE1}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{ECD5319A-2409-4D01-BE34-2E1810C90DE1}.Debug|Any CPU.Build.0 = Debug|iPhoneSimulator
+		{ECD5319A-2409-4D01-BE34-2E1810C90DE1}.Debug|Any CPU.Deploy.0 = Debug|iPhoneSimulator
 		{ECD5319A-2409-4D01-BE34-2E1810C90DE1}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{ECD5319A-2409-4D01-BE34-2E1810C90DE1}.Debug|iPhone.Build.0 = Debug|iPhone
 		{ECD5319A-2409-4D01-BE34-2E1810C90DE1}.Debug|iPhone.Deploy.0 = Debug|iPhone
