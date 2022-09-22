@@ -14,7 +14,8 @@
         <CollectionView x:Name="ItemsListView"
                 ItemsSource="{Binding Items}"
                 Header="{Binding .}"
-                SelectionMode="None">
+                SelectionMode="None"
+                BackgroundColor="{StaticResource Secondary}">
             <CollectionView.HeaderTemplate>
                 <DataTemplate>
                     <StackLayout Orientation="Vertical" Padding="30,24,30,24" Spacing="10">
