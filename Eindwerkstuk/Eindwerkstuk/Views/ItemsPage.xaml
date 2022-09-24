@@ -5,7 +5,8 @@
              Title="{Binding Title}"
              xmlns:local="clr-namespace:Eindwerkstuk.ViewModels"  
              xmlns:model="clr-namespace:Eindwerkstuk.Models"  
-             x:Name="BrowseItemsPage">
+             x:Name="BrowseItemsPage"
+             BackgroundColor="{StaticResource Background}">
     <!--
       x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
       https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
@@ -14,16 +15,17 @@
         <CollectionView x:Name="ItemsListView"
                 ItemsSource="{Binding Items}"
                 Header="{Binding .}"
-                SelectionMode="None"
-                BackgroundColor="{StaticResource Secondary}">
+                SelectionMode="None">
             <CollectionView.HeaderTemplate>
                 <DataTemplate>
                     <StackLayout Orientation="Vertical" Padding="30,24,30,24" Spacing="10">
                         <Button Text="Zoek" />
-                        <StackLayout Orientation="Horizontal">
+                        <Frame CornerRadius="10" Padding="0" BackgroundColor="{StaticResource BackgroundAlt}">
+                        <StackLayout Orientation="Horizontal" Padding="8">
                             <Entry Text="{Binding Text, Mode=TwoWay}" Placeholder="Voeg ingredient toe" HorizontalOptions="FillAndExpand"/>
-                            <Button WidthRequest="50" FontSize="20" Padding="0,0,0,5" Text="+" Command="{Binding SaveCommand}"/>
-                        </StackLayout>
+                                <Button WidthRequest="50" FontSize="25" Padding="0,0,0,5" Text="+" Command="{Binding SaveCommand}" CornerRadius="0"/>
+                            </StackLayout>
+                        </Frame>
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.HeaderTemplate>
@@ -31,7 +33,7 @@
             <CollectionView.ItemTemplate >
                 <DataTemplate>
                     <StackLayout Padding="30,5" x:DataType="model:Item" Orientation="Horizontal" >
-                        <Button WidthRequest="50" FontSize="20" Padding="0,0,0,5" Text="-" Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=RemoveItemCommand}" CommandParameter="{Binding .}"/>
+                        <Button WidthRequest="50" FontSize="25" Padding="0,0,0,5" Text="-" Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=RemoveItemCommand}" CommandParameter="{Binding .}"/>
                         <Label Text="{Binding Text}" 
                             LineBreakMode="NoWrap" 
                             Style="{DynamicResource ListItemTextStyle}" 
