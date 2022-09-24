@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:Eindwerkstuk.ViewModels"
              x:Class="Eindwerkstuk.Views.SearchPage"
              Title="{Binding Title}"
+             BackgroundColor="{StaticResource Background}"
 >
     <ContentPage.BindingContext>
         <local:SearchPageViewModel/>
@@ -13,19 +14,24 @@
         <ListView ItemsSource="{Binding Recipes}"
               HasUnevenRows="True"
               SeparatorVisibility="None"
-              BackgroundColor="{StaticResource Secondary}">
+              Margin="4"
+>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Grid Padding="8,4">
-                            <Frame CornerRadius="8" BackgroundColor="#f9edc9">
+                        <Grid Padding="4">
+                            <Frame CornerRadius="8" BackgroundColor="{StaticResource BackgroundAlt}" Padding="0">
                                 <StackLayout Orientation="Horizontal">
                                     <Image Source="{Binding Image}"
-                                   WidthRequest="66"/>
+                                   WidthRequest="64"
+                                   Aspect="AspectFill"
+                                   />
                                     <StackLayout>
                                         <Label Text="{Binding Name}"
-                                       FontSize="Large"
-                                       TextColor="{StaticResource TextColorAlt}"/>
+                                       FontSize="16"
+                                       TextColor="{StaticResource TextColor}"
+                                       Padding="16"
+                                       />
                                     </StackLayout>
                                     <StackLayout.GestureRecognizers>
                                         <TapGestureRecognizer 
