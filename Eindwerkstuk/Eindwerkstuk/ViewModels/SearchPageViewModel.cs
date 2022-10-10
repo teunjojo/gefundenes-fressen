@@ -7,7 +7,9 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration.TizenSpecific;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace Eindwerkstuk.ViewModels
@@ -16,16 +18,20 @@ namespace Eindwerkstuk.ViewModels
     {
         readonly List<Recipe> recipesList;
         public ObservableCollection<Recipe> Recipes { get; }
-        public Command<Recipe> ItemTapped { get; }
         public Command LoadItemsCommand { get; }
+        ICommand tapCommand;
         public SearchPageViewModel()
         {
             Title = "Zoeken";
             Recipes = new ObservableCollection<Recipe>();
             GetSearchResult();
+            tapCommand = new Command(OnTapped);
 
-            ItemTapped = new Command<Recipe>(OnItemSelected);
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+        }
+        public ICommand TapCommand
+        {
+            get { return tapCommand; }
         }
         async Task ExecuteLoadItemsCommand()
         {
@@ -49,13 +55,13 @@ namespace Eindwerkstuk.ViewModels
                 IsBusy = false;
             }
         }
-        async void OnItemSelected(Recipe recipe)
+        void OnTapped(object s)
         {
-            if (recipe == null)
-                return;
-
-            // This will push the ItemDetailPage onto the navigation stack
-            await Shell.Current.GoToAsync($"{nameof(RecipePage)}?{nameof(RecipePageViewModel.RecipeId)}={recipe.Id}");
+            Debug.WriteLine("");
+            Debug.WriteLine(s);
+            Debug.WriteLine("");
+            // This will push the RecipePage onto the navigation stack
+            Shell.Current.GoToAsync($"{nameof(RecipePage)}?{nameof(RecipePageViewModel.RecipeId)}={s}");
         }
         private void GetSearchResult()
         {
