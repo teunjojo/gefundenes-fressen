@@ -11,10 +11,12 @@ namespace Eindwerkstuk.ViewModels
     public class ItemsViewModel : BaseViewModel
     {
         private Item _selectedItem;
+        private INavigation _navigation;
 
         public ObservableCollection<Item> Items { get; }
         public Command LoadItemsCommand { get; }
         public Command AddItemCommand { get; }
+        public Command SearchCommand { get; }
         public Command<Item> ItemTapped { get; }
         public Command<Item> RemoveItemCommand { get; }
 
@@ -29,6 +31,9 @@ namespace Eindwerkstuk.ViewModels
             RemoveItemCommand = new Command<Item>(OnDeleteItem);
 
             SaveCommand = new Command(OnSave, ValidateSave);
+
+            SearchCommand = new Command(OnSearch);
+
             this.PropertyChanged +=
                 (_, __) => SaveCommand.ChangeCanExecute();
         }
@@ -118,5 +123,9 @@ namespace Eindwerkstuk.ViewModels
             await ExecuteLoadItemsCommand();
         }
 
+        async void OnSearch()
+        {
+            await _navigation.PushAsync(new SearchPage());
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace Eindwerkstuk
             InitializeComponent();
             Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
             Routing.RegisterRoute(nameof(RecipePage), typeof(RecipePage));
+            Routing.RegisterRoute(nameof(SearchPage), typeof(SearchPage));
         }
 
     }

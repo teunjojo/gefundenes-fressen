@@ -19,7 +19,7 @@
             <CollectionView.HeaderTemplate>
                 <DataTemplate>
                     <StackLayout Orientation="Vertical" Padding="30,24,30,24" Spacing="10">
-                        <Button Text="Zoek" />
+                        <Button Text="Zoek" Clicked="Search" />
                         <Frame CornerRadius="10" Padding="0" BackgroundColor="{StaticResource BackgroundAlt}">
                         <StackLayout Orientation="Horizontal" Padding="8">
                             <Entry Text="{Binding Text, Mode=TwoWay}" Placeholder="Voeg ingredient toe" HorizontalOptions="FillAndExpand"/>

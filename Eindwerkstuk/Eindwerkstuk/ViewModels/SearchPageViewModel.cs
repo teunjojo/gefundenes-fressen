@@ -1,9 +1,12 @@
 ﻿using Eindwerkstuk.Models;
 using Eindwerkstuk.Views;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,9 +63,36 @@ namespace Eindwerkstuk.ViewModels
         private void GetSearchResult()
         {
             Recipes.Clear();
-            Recipes.Add(new Recipe() { Id = Guid.NewGuid().ToString(), Name = "How To Make Classic French Toast", Image = "https://img.buzzfeed.com/thumbnailer-prod-us-east-1/video-api/assets/341495.jpg" });
-            Recipes.Add(new Recipe() { Id = Guid.NewGuid().ToString(), Name = "Easy Beef Hand Pies", Image = "https://img.buzzfeed.com/tasty-app-user-assets-prod-us-east-1/recipes/11e6176999dd4d3fa7444224e8891cdb.jpeg" });
-            Recipes.Add(new Recipe() { Id = Guid.NewGuid().ToString(), Name = "Instant Pot Texas Smoked Brisket Chowder", Image = "https://img.buzzfeed.com/tasty-app-user-assets-prod-us-east-1/recipes/1a08783ea26843a88d3b14c938976ee0.jpeg" });
+            GetRecipesWithIngredient("carrot");
+            GetRecipeInfo(6);
+            GetRecipeInfo(7);
+        }
+        async void GetRecipeInfo(int id)
+        {
+            var uri = new Uri("https://recipe.teunjojo.com/recipe.php?id=" + id);
+            var httpClient = new HttpClient();
+            var resultJson = await httpClient.GetStringAsync(uri);
+            var settings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                MissingMemberHandling = MissingMemberHandling.Ignore
+            };
+
+            var resultRecipe =
+                JsonConvert.DeserializeObject<Recipe>(resultJson, settings);
+            Recipes.Add(resultRecipe);
+        }
+        async void GetRecipesWithIngredient(string name)
+        {
+            var uri = new Uri("https://recipe.teunjojo.com/with-ingredient.php?name=" + name);
+            var httpClient = new HttpClient();
+            var resultJson = await httpClient.GetStringAsync(uri);
+
+            var recipeIds = JsonConvert.DeserializeObject<JArray>(resultJson);
+            foreach (int id in recipeIds)
+            {
+                GetRecipeInfo(id);
+            }
         }
     }
 }

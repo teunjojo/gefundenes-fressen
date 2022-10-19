@@ -12,7 +12,7 @@ namespace Eindwerkstuk.ViewModels
     [QueryProperty(nameof(RecipeId), nameof(RecipeId))]
     public class RecipePageViewModel : BaseViewModel
     {
-        private string recipeId;
+        private int recipeId;
         private string name;
         private string description;
         readonly List<Recipe> recipesList;
@@ -24,7 +24,7 @@ namespace Eindwerkstuk.ViewModels
             Title = Name;
             Recipes = new ObservableCollection<Recipe>();
         }
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         public string Name
         {
@@ -38,7 +38,7 @@ namespace Eindwerkstuk.ViewModels
             set => SetProperty(ref description, value);
         }
 
-        public string RecipeId
+        public int RecipeId
         {
             get
             {
@@ -51,13 +51,13 @@ namespace Eindwerkstuk.ViewModels
             }
         }
 
-        public async void LoadItemId(string recipeId)
+        public async void LoadItemId(int recipeId)
         {
             try
             {
-                var item = await Task.FromResult(recipesList.FirstOrDefault(s => s.Id == recipeId));
-                Id = item.Id;
-                Name = item.Name;
+                var item = await Task.FromResult(recipesList.FirstOrDefault(s => s.RecipeId == recipeId));
+                Id = item.RecipeId;
+                Name = item.RecipeTitle;
             }
             catch (Exception)
             {

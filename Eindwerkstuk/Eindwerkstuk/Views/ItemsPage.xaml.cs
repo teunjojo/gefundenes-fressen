@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Http;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -28,6 +29,11 @@ namespace Eindwerkstuk.Views
         {
             base.OnAppearing();
             _viewModel.OnAppearing();
+        }
+
+        void Search(System.Object sender, System.EventArgs e)
+        {
+            //
         }
     }
 }
