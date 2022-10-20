@@ -14,8 +14,8 @@ namespace Eindwerkstuk.Services
         {
             items = new List<Item>()
             {
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Wortel"},
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Courgette"},
+                new Item { Id = Guid.NewGuid().ToString(), Text = "Carrot"},
+                new Item { Id = Guid.NewGuid().ToString(), Text = "Oreo"},
             };
         }
 

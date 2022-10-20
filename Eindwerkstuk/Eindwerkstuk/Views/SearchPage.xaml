@@ -10,42 +10,41 @@
         <local:SearchPageViewModel/>
     </ContentPage.BindingContext>
 
-    <RefreshView Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+    <ContentView>
         <ListView ItemsSource="{Binding Recipes}"
               HasUnevenRows="True"
               SeparatorVisibility="None"
               Margin="4"
+              SelectionMode="None"
 >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Grid Padding="4">
-                            <Frame CornerRadius="8" BackgroundColor="{StaticResource BackgroundAlt}" Padding="0">
-                                <StackLayout Orientation="Horizontal">
-                                    <Image Source="{Binding Image}"
+
+                        <Frame CornerRadius="8" BackgroundColor="{StaticResource BackgroundAlt}" Padding="0" Margin="4">
+                            <StackLayout Orientation="Horizontal">
+                                <Image Source="{Binding RecipeImgurl}"
                                    WidthRequest="64"
+                                   HeightRequest="64"
                                    Aspect="AspectFill"
                                    />
-                                    <StackLayout>
-                                        <Label Text="{Binding Name}"
+                                <StackLayout HorizontalOptions="FillAndExpand">
+                                    <Label Text="{Binding RecipeTitle}"
                                        FontSize="16"
                                        TextColor="{StaticResource TextColor}"
                                        Padding="16"
                                        />
-                                    </StackLayout>
-                                    <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer 
-                                NumberOfTapsRequired="1"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:SearchPageViewModel}}, Path=ItemTapped}"		
-                                CommandParameter="{Binding .}">
-                                        </TapGestureRecognizer>
-                                    </StackLayout.GestureRecognizers>
                                 </StackLayout>
-                            </Frame>
-                        </Grid>
+                                <Button
+                                    Text="Bekijk"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:SearchPageViewModel}}, Path=ItemTapped}"
+                                        CommandParameter="{Binding .}">
+                                </Button>
+                            </StackLayout>
+                        </Frame>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </RefreshView>
+    </ContentView>
 </ContentPage>

@@ -11,7 +11,7 @@
       x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
       https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
     -->
-    <RefreshView x:DataType="local:ItemsViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+    <ContentView x:DataType="local:ItemsViewModel">
         <CollectionView x:Name="ItemsListView"
                 ItemsSource="{Binding Items}"
                 Header="{Binding .}"
@@ -19,7 +19,7 @@
             <CollectionView.HeaderTemplate>
                 <DataTemplate>
                     <StackLayout Orientation="Vertical" Padding="30,24,30,24" Spacing="10">
-                        <Button Text="Zoek" Clicked="Search" />
+                        <Button Text="Zoek" Command="{Binding SearchCommand}" />
                         <Frame CornerRadius="10" Padding="0" BackgroundColor="{StaticResource BackgroundAlt}">
                         <StackLayout Orientation="Horizontal" Padding="8">
                             <Entry Text="{Binding Text, Mode=TwoWay}" Placeholder="Voeg ingredient toe" HorizontalOptions="FillAndExpand"/>
@@ -39,16 +39,16 @@
                             Style="{DynamicResource ListItemTextStyle}" 
                             FontSize="20"
                             HorizontalOptions="FillAndExpand" />
-                        <StackLayout.GestureRecognizers>
+                        <!--<StackLayout.GestureRecognizers>
                             <TapGestureRecognizer 
                                 NumberOfTapsRequired="1"
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=ItemTapped}"		
                                 CommandParameter="{Binding .}">
                             </TapGestureRecognizer>
-                        </StackLayout.GestureRecognizers>
+                        </StackLayout.GestureRecognizers>-->
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-    </RefreshView>
+    </ContentView>
 </ContentPage>

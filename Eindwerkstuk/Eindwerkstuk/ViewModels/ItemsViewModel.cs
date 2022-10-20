@@ -36,6 +36,7 @@ namespace Eindwerkstuk.ViewModels
 
             this.PropertyChanged +=
                 (_, __) => SaveCommand.ChangeCanExecute();
+            ExecuteLoadItemsCommand();
         }
 
         async Task ExecuteLoadItemsCommand()
@@ -123,9 +124,9 @@ namespace Eindwerkstuk.ViewModels
             await ExecuteLoadItemsCommand();
         }
 
-        async void OnSearch()
+        private async void OnSearch()
         {
-            await _navigation.PushAsync(new SearchPage());
+            await Shell.Current.GoToAsync($"{nameof(SearchPage)}?{nameof(SearchPageViewModel.Name)}={"carrot"}");
         }
     }
 }

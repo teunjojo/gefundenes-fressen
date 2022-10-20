@@ -10,33 +10,51 @@ using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace Eindwerkstuk.ViewModels
 { 
     public class SearchPageViewModel : BaseViewModel
     {
+        private string name;
         readonly List<Recipe> recipesList;
+        readonly List<Item> itemList;
         public ObservableCollection<Recipe> Recipes { get; }
+        public ObservableCollection<Item> Items { get; }
         public Command<Recipe> ItemTapped { get; }
         public Command LoadItemsCommand { get; }
         public SearchPageViewModel()
         {
-            Title = "Zoeken";
             Recipes = new ObservableCollection<Recipe>();
-            GetSearchResult();
+            Items = new ObservableCollection<Item>();
+
+            Title = "Zoeken";
 
             ItemTapped = new Command<Recipe>(OnItemSelected);
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+            ExecuteLoadItemsCommand();
+        }
+
+        public string Name
+        {
+            get => name;
+            set => SetProperty(ref name, value);
         }
         async Task ExecuteLoadItemsCommand()
         {
             IsBusy = true;
-
             try
             {
-                GetSearchResult();
+                Items.Clear();
+                var items = await DataStore.GetItemsAsync(true);
+                foreach (var item in items)
+                {
+                    Items.Add(item);
+                }
+                GetSearchResult(Items[0].Text);
                 var recipes = await Task.FromResult(recipesList);
                 foreach (var recipe in recipes)
                 {
@@ -54,18 +72,16 @@ namespace Eindwerkstuk.ViewModels
         }
         async void OnItemSelected(Recipe recipe)
         {
+            Debug.WriteLine("test");
             if (recipe == null)
                 return;
 
-            // This will push the ItemDetailPage onto the navigation stack
-            await Shell.Current.GoToAsync($"{nameof(RecipePage)}?{nameof(RecipePageViewModel.RecipeId)}={recipe.Id}");
+            await Shell.Current.GoToAsync($"{nameof(RecipePage)}?{nameof(RecipePageViewModel.RecipeId)}={recipe.RecipeId}");
         }
-        private void GetSearchResult()
+        private void GetSearchResult(string name)
         {
             Recipes.Clear();
-            GetRecipesWithIngredient("carrot");
-            GetRecipeInfo(6);
-            GetRecipeInfo(7);
+            GetRecipesWithIngredient(name);
         }
         async void GetRecipeInfo(int id)
         {

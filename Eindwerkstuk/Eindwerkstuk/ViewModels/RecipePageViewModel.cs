@@ -1,9 +1,11 @@
 ﻿using Eindwerkstuk.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -13,29 +15,31 @@ namespace Eindwerkstuk.ViewModels
     public class RecipePageViewModel : BaseViewModel
     {
         private int recipeId;
-        private string name;
-        private string description;
+        private string title;
+        private string[] instructions;
+        private Uri img;
         readonly List<Recipe> recipesList;
         public ObservableCollection<Recipe> Recipes { get; }
 
         public RecipePageViewModel()
         {
-            // FIXME: fix pagina titel
-            Title = Name;
+
             Recipes = new ObservableCollection<Recipe>();
         }
-        public int Id { get; set; }
-
-        public string Name
+        public string Title
         {
-            get => name;
-            set => SetProperty(ref name, value);
+            get { return title; }
+            set { title = value; OnPropertyChanged(); }
         }
-
-        public string Description
+        public Uri RecipeImgurl
         {
-            get => description;
-            set => SetProperty(ref description, value);
+            get { return img; }
+            set { img = value; }
+        }
+        public string[] Instructions
+        {
+            get { return instructions; }
+            set { instructions = value; }
         }
 
         public int RecipeId
@@ -47,7 +51,7 @@ namespace Eindwerkstuk.ViewModels
             set
             {
                 recipeId = value;
-                LoadItemId(value);
+                GetRecipeInfo(value);
             }
         }
 
@@ -55,14 +59,42 @@ namespace Eindwerkstuk.ViewModels
         {
             try
             {
-                var item = await Task.FromResult(recipesList.FirstOrDefault(s => s.RecipeId == recipeId));
-                Id = item.RecipeId;
-                Name = item.RecipeTitle;
+                var recipes = await Task.FromResult(recipesList);
+                foreach (var recipe in recipes)
+                {
+                    Recipes.Add(recipe);
+                }
+                Debug.WriteLine("asdfsdf");
+                //var currentRecipe = recipes.Find(x => x.RecipeTitle.Contains("test"));
+                Console.WriteLine("\nFind: Part where name contains \"e\": {0}",
+            recipes.Find(x => x.RecipeTitle.Contains("e")).RecipeId);
+                Debug.WriteLine("testt");
+                //Debug.WriteLine(currentRecipe.RecipeTitle);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Debug.WriteLine("Failed to Load Item");
+                Debug.WriteLine(ex);
             }
+        }
+        async void GetRecipeInfo(int id)
+        {
+            var uri = new Uri("https://recipe.teunjojo.com/recipe.php?id=" + id);
+            var httpClient = new HttpClient();
+            var resultJson = await httpClient.GetStringAsync(uri);
+            var settings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                MissingMemberHandling = MissingMemberHandling.Ignore
+            };
+
+            var resultRecipe =
+                JsonConvert.DeserializeObject<Recipe>(resultJson, settings);
+            Recipes.Add(resultRecipe);
+            Title = resultRecipe.RecipeTitle;
+            RecipeId = resultRecipe.RecipeId;
+            RecipeImgurl = resultRecipe.RecipeImgurl;
+            Instructions = resultRecipe.Instructions;
+
         }
     }
 }

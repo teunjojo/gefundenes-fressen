@@ -30,10 +30,5 @@ namespace Eindwerkstuk.Views
             base.OnAppearing();
             _viewModel.OnAppearing();
         }
-
-        void Search(System.Object sender, System.EventArgs e)
-        {
-            //
-        }
     }
 }
