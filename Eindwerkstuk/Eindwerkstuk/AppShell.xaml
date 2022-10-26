@@ -2,7 +2,7 @@
 <Shell xmlns="http://xamarin.com/schemas/2014/forms" 
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:local="clr-namespace:Eindwerkstuk.Views"
-       Title="Eindwerkstuk"
+       Title="Gefundeness Fressen"
        x:Class="Eindwerkstuk.AppShell">
 
     <!--
@@ -30,8 +30,8 @@
     </Shell.Resources>
 
     <TabBar>
-        <ShellContent Title="Browse" Icon="icon_feed.png" ContentTemplate="{DataTemplate local:ItemsPage}" />
-        <ShellContent Title="Temp" Icon="icon_feed.png" ContentTemplate="{DataTemplate local:RecipePage}" />
+        <ShellContent Title="Ingredients" Icon="receipt.png" ContentTemplate="{DataTemplate local:ItemsPage}" />
+        <ShellContent Title="Saved" Icon="favorite.png" ContentTemplate="{DataTemplate local:SavedPage}" />
     </TabBar>
 
 </Shell>
