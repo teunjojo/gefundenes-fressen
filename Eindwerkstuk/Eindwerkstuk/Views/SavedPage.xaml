@@ -2,18 +2,16 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:local="clr-namespace:Eindwerkstuk.ViewModels"
-             x:Class="Eindwerkstuk.Views.SearchPage"
+             x:Class="Eindwerkstuk.Views.SavedPage"
              Title="{Binding Title}"
              BackgroundColor="{StaticResource Background}"
 >
     <ContentPage.BindingContext>
-        <local:SearchPageViewModel/>
+        <local:SavedPageViewModel/>
     </ContentPage.BindingContext>
 
-
-    <RefreshView>
-        <StackLayout>
-            <ListView ItemsSource="{Binding Recipes}"
+    <RefreshView Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsRefreshing}">
+        <ListView ItemsSource="{Binding Recipes}"
               HasUnevenRows="True"
               SeparatorVisibility="None"
               Margin="4"
@@ -52,7 +50,7 @@
                                     </StackLayout>
                                     <Button
                                         Text="Open"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:SearchPageViewModel}}, Path=ItemTapped}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:SavedPageViewModel}}, Path=ItemTapped}"
                                         CommandParameter="{Binding .}"
                                         WidthRequest="75"
                                         CornerRadius="0"
@@ -63,16 +61,6 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-                <ListView.Footer>
-                    <Button
-                        Text="Load more"
-                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:SearchPageViewModel}}, Path=LoadMore}"
-                        CommandParameter="{Binding .}"
-                        WidthRequest="75"
-                        >
-                    </Button>
-                </ListView.Footer>
             </ListView>
-        </StackLayout>
     </RefreshView>
 </ContentPage>

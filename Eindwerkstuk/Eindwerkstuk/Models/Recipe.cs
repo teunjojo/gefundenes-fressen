@@ -16,13 +16,16 @@ namespace Eindwerkstuk.Models
         public Uri RecipeImgurl { get; set; }
 
         [JsonProperty("TOTAL_TIME")]
-        public int TotalTime { get; set; }
+        public string TotalTime { get; set; }
+        public bool TotalTimeExists { get; set; }
 
         [JsonProperty("PREP_TIME")]
-        public int PrepTime { get; set; }
+        public string PrepTime { get; set; }
+        public bool PrepTimeExists { get; set; }
 
         [JsonProperty("COOK_TIME")]
-        public int CookTime { get; set; }
+        public string CookTime { get; set; }
+        public bool CookTimeExists { get; set; }
 
         [JsonProperty("RATING_POSITIVE")]
         public int RatingPositive { get; set; }

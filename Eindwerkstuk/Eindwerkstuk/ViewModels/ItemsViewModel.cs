@@ -1,6 +1,9 @@
 ﻿using Eindwerkstuk.Models;
 using Eindwerkstuk.Views;
+using Newtonsoft.Json;
+using Plugin.Settings;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -46,7 +49,7 @@ namespace Eindwerkstuk.ViewModels
             try
             {
                 Items.Clear();
-                var items = await DataStore.GetItemsAsync(true);
+                var items = JsonConvert.DeserializeObject<List<Item>>(CrossSettings.Current.GetValueOrDefault("Ingredients", string.Empty));
                 foreach (var item in items)
                 {
                     Items.Add(item);
@@ -84,7 +87,6 @@ namespace Eindwerkstuk.ViewModels
                 return;
 
             // This will push the ItemDetailPage onto the navigation stack
-            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ItemId)}={item.Id}");
         }
         private string text;
 
@@ -104,29 +106,45 @@ namespace Eindwerkstuk.ViewModels
 
         private async void OnSave()
         {
-            Item newItem = new Item()
+            // Create List<Item>
+            List<Item> items;
+            items = new List<Item>();
+            // If CrossSettings exists; import values to List<Item>
+            if (CrossSettings.Current.Contains("Ingredients")) items = JsonConvert.DeserializeObject<List<Item>>(CrossSettings.Current.GetValueOrDefault("Ingredients", string.Empty));
+            foreach (var item in items)
             {
-                Id = Guid.NewGuid().ToString(),
-                Text = Text
-        };
+                Items.Add(item);
+            }
+            // Add new Item
+            items.Add(new Item { Id = Guid.NewGuid().ToString(), Text = Text });
             Text = null;
 
-            await DataStore.AddItemAsync(newItem);
-           await ExecuteLoadItemsCommand();
+            // Store Item
+            CrossSettings.Current.AddOrUpdateValue("Ingredients", JsonConvert.SerializeObject(items));
+            await ExecuteLoadItemsCommand();
         }
 
         async void OnDeleteItem(Item item)
         {
-            if (item == null)
-                return;
-
-            await DataStore.DeleteItemAsync(item.Id);
-            await ExecuteLoadItemsCommand();
+            // Delete Item where item.Id From CrossSettings
+            List<Item> ingrs = JsonConvert.DeserializeObject<List<Item>>(CrossSettings.Current.GetValueOrDefault("Ingredients", string.Empty));
+            foreach (var ingr in ingrs)
+            {
+                if (item.Id == ingr.Id)
+                {
+                    ingrs.RemoveAll(p => p.Id == ingr.Id);
+                    // Put remaining Items back in CrossSettings
+                    CrossSettings.Current.AddOrUpdateValue("Ingredients", JsonConvert.SerializeObject(ingrs));
+                    await ExecuteLoadItemsCommand();
+                    return;
+                }
+            }
         }
 
         private async void OnSearch()
         {
-            await Shell.Current.GoToAsync($"{nameof(SearchPage)}?{nameof(SearchPageViewModel.Name)}={"carrot"}");
+            // If Ingredients exist goto searchpage with parameter ?Ingredients= 'Ingredients'
+            if (CrossSettings.Current.Contains("Ingredients")) await Shell.Current.GoToAsync($"{nameof(SearchPage)}?Ingredients={CrossSettings.Current.GetValueOrDefault("Ingredients", string.Empty)}");
         }
     }
 }
