@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <AssemblyName>Gefundeness Fressen</AssemblyName>
-    <RootNamespace>Gefundeness_Fressen</RootNamespace>
+    <RootNamespace>Fe</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
