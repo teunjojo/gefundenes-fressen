@@ -29,6 +29,7 @@
                             <VisualState x:Name="Normal">
                                 <VisualState.Setters>
                                     <Setter Property="BackgroundColor" Value="{StaticResource Secondary}" />
+                                    <Setter Property="CornerRadius" Value="8" />
                                 </VisualState.Setters>
                             </VisualState>
                             <VisualState x:Name="Disabled">

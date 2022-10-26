@@ -22,8 +22,8 @@
                         <Button Text="Zoek" Command="{Binding SearchCommand}" />
                         <Frame CornerRadius="10" Padding="0" BackgroundColor="{StaticResource BackgroundAlt}">
                         <StackLayout Orientation="Horizontal" Padding="8">
-                            <Entry Text="{Binding Text, Mode=TwoWay}" Placeholder="Voeg ingredient toe" HorizontalOptions="FillAndExpand"/>
-                                <Button WidthRequest="50" FontSize="25" Padding="0,0,0,5" Text="+" Command="{Binding SaveCommand}" CornerRadius="0"/>
+                            <Entry Text="{Binding Text, Mode=TwoWay}" Placeholder="Voeg ingredient toe" HorizontalOptions="FillAndExpand" />
+                                <Button WidthRequest="50" FontSize="25" Padding="0,0,0,5" Text="+" Command="{Binding SaveCommand}"/>
                             </StackLayout>
                         </Frame>
                     </StackLayout>
