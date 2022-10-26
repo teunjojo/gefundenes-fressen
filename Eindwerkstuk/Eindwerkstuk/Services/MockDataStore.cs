@@ -12,11 +12,7 @@ namespace Eindwerkstuk.Services
 
         public MockDataStore()
         {
-            items = new List<Item>()
-            {
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Carrot"},
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Oreo"},
-            };
+
         }
 
         public async Task<bool> AddItemAsync(Item item)
